@@ -1,6 +1,5 @@
 package cinema.dao;
 
-import cinema.exceptions.DataProcessingException;
 import cinema.model.Movie;
 import java.util.List;
 
