@@ -14,7 +14,6 @@ import javax.persistence.criteria.CriteriaQuery;
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.save(cinemaHall);
             return cinemaHall;
