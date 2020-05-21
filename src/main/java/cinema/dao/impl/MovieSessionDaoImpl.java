@@ -5,15 +5,13 @@ import cinema.exceptions.DataProcessingException;
 import cinema.lib.Dao;
 import cinema.model.MovieSession;
 import cinema.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.Session;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -37,9 +35,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public MovieSession add(MovieSession movieSession) {
-            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                session.save(movieSession);
-                return movieSession;
-            }
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            session.save(movieSession);
+            return movieSession;
+        }
     }
 }

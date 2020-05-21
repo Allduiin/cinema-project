@@ -23,16 +23,19 @@ public class Main {
 
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(200);
-        CinemaHallService cinemaHallService = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        CinemaHallService cinemaHallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
         cinemaHallService.add(cinemaHall);
 
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setMovie(movie);
         movieSession.setShowTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(20,5)));
-        MovieSessionService movieSessionService = (MovieSessionService) injector.getInstance(MovieSessionService.class);
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
 
-        movieSessionService.findAvailableSessions(movie.getId(), LocalDate.now()).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(movie.getId(),
+                LocalDate.now()).forEach(System.out::println);
     }
 }

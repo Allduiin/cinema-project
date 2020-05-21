@@ -12,9 +12,10 @@ import java.util.List;
 public class MovieSessionServiceImpl implements MovieSessionService {
     @Inject
     private MovieSessionDao movieSessionDao;
+
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-            return movieSessionDao.findAvailableSessions(movieId, date);
+        return movieSessionDao.findAvailableSessions(movieId, date);
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.List;
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
     private CinemaHallDao cinemaHallDao;
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         return cinemaHallDao.add(cinemaHall);
