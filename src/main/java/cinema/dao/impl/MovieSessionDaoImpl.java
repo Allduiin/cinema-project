@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -35,9 +36,23 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public MovieSession add(MovieSession movieSession) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Transaction transaction = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            transaction = session.beginTransaction();
+            session.save(movieSession);
+            transaction.commit();
             session.save(movieSession);
             return movieSession;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Error adding movie", e);
+        } finally {
+            if(session != null) {
+                session.close();
+            }
         }
     }
 }
