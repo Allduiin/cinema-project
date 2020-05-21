@@ -5,10 +5,10 @@ import cinema.exceptions.DataProcessingException;
 import cinema.lib.Dao;
 import cinema.model.CinemaHall;
 import cinema.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
@@ -28,7 +28,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             }
             throw new DataProcessingException("Error adding cinema hall", e);
         } finally {
-            if(session != null) {
+            if (session != null) {
                 session.close();
             }
         }

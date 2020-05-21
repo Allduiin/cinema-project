@@ -28,7 +28,7 @@ public class MovieDaoImpl implements MovieDao {
             }
             throw new DataProcessingException("Error adding movie", e);
         } finally {
-            if(session != null) {
+            if (session != null) {
                 session.close();
             }
         }
