@@ -6,7 +6,7 @@ import java.security.SecureRandom;
 import org.apache.log4j.Logger;
 
 public class HashUtil {
-    private static Logger logger = Logger.getLogger(cinema.util.HashUtil.class);
+    private static final Logger logger = Logger.getLogger(cinema.util.HashUtil.class);
 
     public static byte[] getSalt() {
         SecureRandom random = new SecureRandom();

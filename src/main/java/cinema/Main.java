@@ -1,8 +1,5 @@
 package cinema;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import cinema.exceptions.AuthenticationException;
 import cinema.lib.Injector;
 import cinema.model.CinemaHall;
@@ -14,9 +11,12 @@ import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
 import cinema.service.UserService;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Main {
-    private static Injector injector = Injector.getInstance("cinema");
+    private static final Injector injector = Injector.getInstance("cinema");
 
     public static void main(String[] args) throws AuthenticationException {
         Movie movie = new Movie();

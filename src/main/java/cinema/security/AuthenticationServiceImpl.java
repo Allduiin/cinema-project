@@ -1,6 +1,5 @@
 package cinema.security;
 
-
 import cinema.exceptions.AuthenticationException;
 import cinema.lib.Inject;
 import cinema.lib.Service;
@@ -26,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User register(String email, String password) throws AuthenticationException {
-        if(userService.findByEmail(email).isPresent()) {
+        if (userService.findByEmail(email).isPresent()) {
             throw new AuthenticationException("This email has already exists");
         }
         User user = new User();
@@ -36,6 +35,4 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return userService.add(user);
     }
-
-
 }
