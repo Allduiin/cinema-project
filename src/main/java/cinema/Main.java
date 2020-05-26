@@ -48,9 +48,9 @@ public class Main {
         authenticationService.register("bob@gmail.com", "2");
 
         UserService userService = (UserService) injector.getInstance(UserService.class);
-        User user1 = userService.findByEmail("alisa@gmail.com").get();
+        User user1 = userService.findByEmail("alisa@gmail.com");
         System.out.println(user1);
-        User user2 = userService.findByEmail("bob@gmail.com").get();
+        User user2 = userService.findByEmail("bob@gmail.com");
         System.out.println(user2);
 
     }
