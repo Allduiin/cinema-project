@@ -3,11 +3,13 @@ package cinema.dao.impl;
 import java.util.Optional;
 import cinema.dao.UserDao;
 import cinema.exceptions.DataProcessingException;
+import cinema.lib.Dao;
 import cinema.model.User;
 import cinema.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+@Dao
 public class UserDaoImpl implements UserDao {
     @Override
     public User add(User user) {

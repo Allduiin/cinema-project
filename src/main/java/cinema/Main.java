@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import cinema.exceptions.AuthenticationException;
-import cinema.lib.Inject;
 import cinema.lib.Injector;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
@@ -43,7 +42,7 @@ public class Main {
         movieSessionService.findAvailableSessions(movie.getId(),
                 LocalDate.now()).forEach(System.out::println);
 
-       AuthenticationService authenticationService =
+        AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
         authenticationService.register("alisa@gmail.com", "1");
         authenticationService.register("bob@gmail.com", "2");
