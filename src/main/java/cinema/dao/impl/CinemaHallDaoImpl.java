@@ -1,9 +1,9 @@
 package cinema.dao.impl;
 
-import cinema.dao.MovieDao;
+import cinema.dao.CinemaHallDao;
 import cinema.exceptions.DataProcessingException;
 import cinema.lib.Dao;
-import cinema.model.Movie;
+import cinema.model.CinemaHall;
 import cinema.util.HibernateUtil;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
@@ -11,22 +11,22 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
-public class MovieDaoImpl implements MovieDao {
+public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
-    public Movie add(Movie movie) {
+    public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.save(cinemaHall);
             transaction.commit();
-            session.save(movie);
-            return movie;
+            session.save(cinemaHall);
+            return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Error adding movie", e);
+            throw new DataProcessingException("Error adding cinema hall", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -35,14 +35,14 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public List<Movie> getAll() {
+    public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
-                    .createQuery(Movie.class);
-            criteriaQuery.from(Movie.class);
+            CriteriaQuery<CinemaHall> criteriaQuery = session.getCriteriaBuilder()
+                    .createQuery(CinemaHall.class);
+            criteriaQuery.from(CinemaHall.class);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all movies. ", e);
+            throw new DataProcessingException("Error retrieving all cinema halls. ", e);
         }
     }
 }
