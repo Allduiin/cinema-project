@@ -11,3 +11,4 @@ public interface ShoppingCartService {
 
     void registerNewShoppingCart(User user);
 }
+
