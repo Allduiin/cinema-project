@@ -1,6 +1,5 @@
 package cinema.security;
 
-
 import cinema.exceptions.AuthenticationException;
 import cinema.model.User;
 
