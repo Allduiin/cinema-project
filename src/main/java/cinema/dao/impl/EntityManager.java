@@ -5,7 +5,7 @@ import cinema.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class AddMethod<T> {
+public class EntityManager<T> {
     public T add(T t) {
         Transaction transaction = null;
         Session session = HibernateUtil.getSessionFactory().openSession();

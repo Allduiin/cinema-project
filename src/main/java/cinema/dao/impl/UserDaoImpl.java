@@ -12,7 +12,7 @@ import org.hibernate.Session;
 public class UserDaoImpl implements UserDao {
     @Override
     public User add(User user) {
-        return new AddMethod<User>().add(user);
+        return new EntityManager<User>().add(user);
     }
 
     @Override

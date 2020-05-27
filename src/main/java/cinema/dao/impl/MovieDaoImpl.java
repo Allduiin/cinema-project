@@ -13,7 +13,7 @@ import org.hibernate.Session;
 public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
-        return new AddMethod<Movie>().add(movie);
+        return new EntityManager<Movie>().add(movie);
     }
 
     @Override

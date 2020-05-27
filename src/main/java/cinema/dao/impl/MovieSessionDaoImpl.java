@@ -35,6 +35,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public MovieSession add(MovieSession movieSession) {
-        return new AddMethod<MovieSession>().add(movieSession);
+        return new EntityManager<MovieSession>().add(movieSession);
     }
 }

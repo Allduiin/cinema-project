@@ -8,6 +8,6 @@ import cinema.model.Ticket;
 public class TicketDaoImpl implements TicketDao {
     @Override
     public Ticket add(Ticket ticket) {
-        return new AddMethod<Ticket>().add(ticket);
+        return new EntityManager<Ticket>().add(ticket);
     }
 }

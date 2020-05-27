@@ -17,7 +17,7 @@ import org.hibernate.Transaction;
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {
-        return new AddMethod<ShoppingCart>().add(shoppingCart);
+        return new EntityManager<ShoppingCart>().add(shoppingCart);
     }
 
     @Override

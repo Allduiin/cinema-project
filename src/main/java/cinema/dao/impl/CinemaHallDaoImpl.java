@@ -13,7 +13,7 @@ import org.hibernate.Session;
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        return new AddMethod<CinemaHall>().add(cinemaHall);
+        return new EntityManager<CinemaHall>().add(cinemaHall);
     }
 
     @Override
