@@ -10,6 +10,7 @@ import cinema.security.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
+import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -53,5 +54,9 @@ public class Main {
         User user2 = userService.findByEmail("bob@gmail.com");
         System.out.println(user2);
 
+        ShoppingCartService shoppingCartService =
+                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        shoppingCartService.registerNewShoppingCart(user1);
+        shoppingCartService.addSession(movieSession, user1);
     }
 }
