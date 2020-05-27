@@ -19,7 +19,7 @@ public class EntityManager<T> {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Error adding cinema hall", e);
+            throw new DataProcessingException("Error adding object", e);
         } finally {
             if (session != null) {
                 session.close();
