@@ -7,30 +7,12 @@ import cinema.model.User;
 import cinema.util.HibernateUtil;
 import java.util.Optional;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 @Dao
 public class UserDaoImpl implements UserDao {
     @Override
     public User add(User user) {
-        Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-            session.save(user);
-            return user;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Error adding user", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        return new AddMethod<User>().add(user);
     }
 
     @Override

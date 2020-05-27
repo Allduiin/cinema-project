@@ -8,30 +8,12 @@ import cinema.util.HibernateUtil;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            transaction = session.beginTransaction();
-            session.save(cinemaHall);
-            transaction.commit();
-            session.save(cinemaHall);
-            return cinemaHall;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Error adding cinema hall", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        return new AddMethod<CinemaHall>().add(cinemaHall);
     }
 
     @Override
