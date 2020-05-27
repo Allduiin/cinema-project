@@ -17,24 +17,7 @@ import org.hibernate.Transaction;
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {
-        Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            transaction = session.beginTransaction();
-            session.save(shoppingCart);
-            transaction.commit();
-            session.save(shoppingCart);
-            return shoppingCart;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Error adding user", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        return new AddMethod<ShoppingCart>().add(shoppingCart);
     }
 
     @Override
