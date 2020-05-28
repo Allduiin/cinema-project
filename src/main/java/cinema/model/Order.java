@@ -1,20 +1,24 @@
 package cinema.model;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tickets")
-public class Ticket {
+@Table(name = "orders")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private MovieSession movieSession;
+    private LocalDateTime time;
+    @OneToMany
+    private List<Ticket> tickets;
     @ManyToOne
     private User user;
 
@@ -23,15 +27,23 @@ public class Ticket {
     }
 
     public void setId(Long id) {
-        id = id;
+        this.id = id;
     }
 
-    public MovieSession getMovieSession() {
-        return movieSession;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public void setMovieSession(MovieSession movieSession) {
-        this.movieSession = movieSession;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     public User getUser() {
@@ -44,9 +56,9 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket{"
-                + "Id=" + id
-                + ", movieSession=" + movieSession
+        return "Order{"
+                + "id=" + id
+                + ", tickets=" + tickets
                 + ", user=" + user
                 + '}';
     }

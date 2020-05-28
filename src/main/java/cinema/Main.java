@@ -10,6 +10,7 @@ import cinema.security.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
+import cinema.service.OrderService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import java.time.LocalDate;
@@ -26,6 +27,11 @@ public class Main {
         movieService.add(movie);
         movieService.getAll().forEach(System.out::println);
 
+        Movie movie2 = new Movie();
+        movie2.setTitle("The Lord of the Rings");
+        movieService.add(movie2);
+        movieService.getAll();
+
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(200);
         CinemaHallService cinemaHallService =
@@ -40,8 +46,11 @@ public class Main {
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
 
-        movieSessionService.findAvailableSessions(movie.getId(),
-                LocalDate.now()).forEach(System.out::println);
+        MovieSession movieSession1 = new MovieSession();
+        movieSession1.setCinemaHall(cinemaHall);
+        movieSession1.setMovie(movie2);
+        movieSession1.setShowTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(12, 20)));
+        movieSessionService.add(movieSession1);
 
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
@@ -58,5 +67,12 @@ public class Main {
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         shoppingCartService.registerNewShoppingCart(user1);
         shoppingCartService.addSession(movieSession, user1);
+        shoppingCartService.addSession(movieSession, user1);
+        shoppingCartService.addSession(movieSession1, user1);
+        shoppingCartService.getByUser(user1);
+
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        orderService.completeOrder(shoppingCartService.getByUser(user1).getTickets(), user1);
+        orderService.getOrderHistory(user1).forEach(System.out::println);
     }
 }
