@@ -13,7 +13,6 @@ public class EntityManager<T> {
             transaction = session.beginTransaction();
             session.save(t);
             transaction.commit();
-            session.save(t);
             return t;
         } catch (Exception e) {
             if (transaction != null) {
