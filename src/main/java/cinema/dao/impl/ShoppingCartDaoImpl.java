@@ -2,27 +2,31 @@ package cinema.dao.impl;
 
 import cinema.dao.ShoppingCartDao;
 import cinema.exceptions.DataProcessingException;
-import cinema.lib.Dao;
 import cinema.model.ShoppingCart;
 import cinema.model.User;
-import cinema.util.HibernateUtil;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
     public ShoppingCart add(ShoppingCart shoppingCart) {
-        return new EntityManager<ShoppingCart>().add(shoppingCart);
+        return new EntityManagerImpl<ShoppingCart>(sessionFactory).add(shoppingCart);
     }
 
     @Override
     public ShoppingCart getByUser(User user) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         try {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<ShoppingCart> query
@@ -46,7 +50,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.update(shoppingCart);
             transaction.commit();
