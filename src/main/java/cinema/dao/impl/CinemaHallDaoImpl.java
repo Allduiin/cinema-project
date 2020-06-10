@@ -2,23 +2,27 @@ package cinema.dao.impl;
 
 import cinema.dao.CinemaHallDao;
 import cinema.exceptions.DataProcessingException;
-import cinema.lib.Dao;
 import cinema.model.CinemaHall;
-import cinema.util.HibernateUtil;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class CinemaHallDaoImpl implements CinemaHallDao {
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        return new EntityManager<CinemaHall>().add(cinemaHall);
+        return new EntityManagerImpl<CinemaHall>(sessionFactory).add(cinemaHall);
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaQuery<CinemaHall> criteriaQuery = session.getCriteriaBuilder()
                     .createQuery(CinemaHall.class);
             criteriaQuery.from(CinemaHall.class);

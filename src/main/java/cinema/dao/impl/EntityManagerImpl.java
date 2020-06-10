@@ -1,14 +1,20 @@
 package cinema.dao.impl;
 
 import cinema.exceptions.DataProcessingException;
-import cinema.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class EntityManager<T> {
+public class EntityManagerImpl<T> {
+    private final SessionFactory sessionFactory;
+
+    public EntityManagerImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public T add(T t) {
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         try {
             transaction = session.beginTransaction();
             session.save(t);
