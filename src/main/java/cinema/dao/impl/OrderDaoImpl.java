@@ -16,14 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class OrderDaoImpl implements OrderDao {
+public class OrderDaoImpl extends EntityManagerImpl<Order> implements OrderDao {
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Override
-    public Order add(Order order) {
-        return new EntityManagerImpl<Order>(sessionFactory).add(order);
-    }
 
     @Override
     public List<Order> getByUser(User user) {

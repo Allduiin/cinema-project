@@ -10,14 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends EntityManagerImpl<User> implements UserDao {
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Override
-    public User add(User user) {
-        return new EntityManagerImpl<User>(sessionFactory).add(user);
-    }
 
     @Override
     public Optional<User> findByEmail(String email) {

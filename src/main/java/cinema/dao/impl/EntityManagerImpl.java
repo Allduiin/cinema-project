@@ -4,13 +4,13 @@ import cinema.exceptions.DataProcessingException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class EntityManagerImpl<T> {
-    private final SessionFactory sessionFactory;
-
-    public EntityManagerImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @Autowired
+    private SessionFactory sessionFactory;
 
     public T add(T t) {
         Transaction transaction = null;
