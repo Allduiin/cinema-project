@@ -33,7 +33,7 @@ public class MovieSessionController {
     @GetMapping("/available")
     public List<MovieSessionResponseDto> getMovieSessions(
             @RequestParam Long movieId,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return movieSessionService
                 .findAvailableSessions(movieId, date)
                 .stream()
