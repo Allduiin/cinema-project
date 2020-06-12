@@ -21,21 +21,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/orders")
 public class OrderController {
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
     @Autowired
-    ShoppingCartService shoppingCartService;
+    private ShoppingCartService shoppingCartService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    OrderMapper orderMapper;
+    private OrderMapper orderMapper;
 
     @PostMapping("/complete")
     public void completeOrder(@RequestBody OrderRequestDto orderDto) {
-        ShoppingCart shoppingCart = shoppingCartService.getById(orderDto.getShoppingCartId());
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(
+                userService.getById(orderDto.getUserId()));
         orderService.completeOrder(shoppingCart.getTickets(), shoppingCart.getUser());
     }
 
-    @GetMapping("/getbyuser")
+    @GetMapping("/by-user")
     public List<OrderResponseDto> getOrderById(@RequestParam Long userId) {
         return orderService.getOrderHistory(userService.getById(userId))
                 .stream()

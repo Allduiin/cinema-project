@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/cinemahalls")
+@RequestMapping("/cinema-halls")
 public class CinemaHallController {
     @Autowired
-    CinemaHallService cinemaHallService;
+    private CinemaHallService cinemaHallService;
     @Autowired
     private CinemaHallMapper cinemaHallMapper;
 
-    @PostMapping("/add")
+    @PostMapping
     public void addCinemaHall(@RequestBody CinemaHallRequestDto requestDto) {
         cinemaHallService.add(cinemaHallMapper.getCinemaHallFromCinemaHallRequestDto(requestDto));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<CinemaHallResponseDto> getCinemaHalls() {
         return cinemaHallService.getAll().stream()
                 .map(cinemaHall -> cinemaHallMapper

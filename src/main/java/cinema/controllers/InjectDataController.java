@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class InjectDataController {
-    MovieService movieService;
-    CinemaHallService cinemaHallService;
-    MovieSessionService movieSessionService;
-    AuthenticationService authenticationService;
-    ShoppingCartService shoppingCartService;
-    OrderService orderService;
+    private MovieService movieService;
+    private CinemaHallService cinemaHallService;
+    private MovieSessionService movieSessionService;
+    private AuthenticationService authenticationService;
+    private ShoppingCartService shoppingCartService;
+    private OrderService orderService;
 
     public InjectDataController(MovieService movieService, CinemaHallService cinemaHallService,
                                 MovieSessionService movieSessionService,
@@ -39,7 +39,7 @@ public class InjectDataController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/injectData")
+    @GetMapping("/inject-data")
     public String inject() throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious 5");

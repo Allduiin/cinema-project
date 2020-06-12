@@ -61,25 +61,4 @@ public class ShoppingCartDaoImpl
             }
         }
     }
-
-    @Override
-    public ShoppingCart getById(Long shoppingCartId) {
-        Session session = sessionFactory.openSession();
-        try {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<ShoppingCart> query
-                    = criteriaBuilder.createQuery(ShoppingCart.class);
-            Root<ShoppingCart> root = query.from(ShoppingCart.class);
-            root.fetch("tickets", JoinType.LEFT);
-            return session.createQuery(
-                    query.where(criteriaBuilder.equal(root.get("id"), shoppingCartId)))
-                    .uniqueResult();
-        } catch (Exception e) {
-            throw new DataProcessingException("Error adding user", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
 }

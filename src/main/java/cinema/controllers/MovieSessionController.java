@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/moviesessions")
+@RequestMapping("/movie-sessions")
 public class MovieSessionController {
     @Autowired
-    MovieSessionService movieSessionService;
+    private MovieSessionService movieSessionService;
     @Autowired
-    MovieSessionMapper movieSessionMapper;
+    private MovieSessionMapper movieSessionMapper;
 
-    @PostMapping("/add")
+    @PostMapping
     public void addMovieSession(@RequestBody MovieSessionRequestDto requestDto) {
         movieSessionService.add(movieSessionMapper
                 .getMovieSessionFromMovieSessionRequestDto(requestDto));

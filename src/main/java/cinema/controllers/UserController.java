@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
-    @GetMapping("/byemail")
+    @GetMapping("/by-email")
     public User getByEmail(@RequestParam String email) {
         return userService.findByEmail(email);
     }
