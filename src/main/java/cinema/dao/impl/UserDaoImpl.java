@@ -29,4 +29,9 @@ public class UserDaoImpl extends EntityManagerImpl<User> implements UserDao {
             }
         }
     }
+
+    @Override
+    public User getById(Long id) {
+        return getById(User.class, id);
+    }
 }

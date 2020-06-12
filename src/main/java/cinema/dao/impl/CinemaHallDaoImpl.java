@@ -26,4 +26,9 @@ public class CinemaHallDaoImpl extends EntityManagerImpl<CinemaHall> implements 
             throw new DataProcessingException("Error retrieving all cinema halls. ", e);
         }
     }
+
+    @Override
+    public CinemaHall getById(Long cinemaHallId) {
+        return getById(CinemaHall.class, cinemaHallId);
+    }
 }

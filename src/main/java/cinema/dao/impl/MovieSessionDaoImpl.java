@@ -36,4 +36,9 @@ public class MovieSessionDaoImpl
             throw new DataProcessingException("Error retrieving Movie Sessions", e);
         }
     }
+
+    @Override
+    public MovieSession getById(Long movieSessionId) {
+        return getById(MovieSession.class, movieSessionId);
+    }
 }

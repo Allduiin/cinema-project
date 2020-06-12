@@ -2,6 +2,7 @@ package cinema.security;
 
 import cinema.exceptions.AuthenticationException;
 import cinema.model.User;
+import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import cinema.util.HashUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private UserService userService;
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
@@ -31,7 +34,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setEmail(email);
         user.setSalt(HashUtil.getSalt());
         user.setPassword(HashUtil.hashPassword(password, user.getSalt()));
-
-        return userService.add(user);
+        user = userService.add(user);
+        shoppingCartService.registerNewShoppingCart(user);
+        return user;
     }
 }

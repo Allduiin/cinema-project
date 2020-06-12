@@ -26,4 +26,9 @@ public class MovieDaoImpl extends EntityManagerImpl<Movie> implements MovieDao {
             throw new DataProcessingException("Error retrieving all movies. ", e);
         }
     }
+
+    @Override
+    public Movie getById(Long movieId) {
+        return getById(Movie.class, movieId);
+    }
 }

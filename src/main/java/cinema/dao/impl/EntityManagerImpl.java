@@ -31,4 +31,12 @@ public class EntityManagerImpl<T> {
             }
         }
     }
+
+    public T getById(Class clazz, Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return (T) session.get(clazz, id);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find entity by id", e);
+        }
+    }
 }

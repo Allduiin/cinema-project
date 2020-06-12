@@ -3,10 +3,8 @@ package cinema.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import org.apache.log4j.Logger;
 
 public class HashUtil {
-    private static final Logger logger = Logger.getLogger(cinema.util.HashUtil.class);
 
     public static byte[] getSalt() {
         SecureRandom random = new SecureRandom();
@@ -17,15 +15,16 @@ public class HashUtil {
 
     public static String hashPassword(String password, byte[] salt) {
         StringBuilder hashPassword = new StringBuilder();
+        MessageDigest messageDigest = null;
         try {
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
-            messageDigest.update(salt);
-            byte[] digest = messageDigest.digest(password.getBytes());
-            for (byte b : digest) {
-                hashPassword.append(String.format("%02x", b));
-            }
+            messageDigest = MessageDigest.getInstance("SHA-512");
         } catch (NoSuchAlgorithmException e) {
-            logger.error(e);
+            throw new RuntimeException(e);
+        }
+        messageDigest.update(salt);
+        byte[] digest = messageDigest.digest(password.getBytes());
+        for (byte b : digest) {
+            hashPassword.append(String.format("%02x", b));
         }
         return hashPassword.toString();
     }
