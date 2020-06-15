@@ -15,7 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MovieSessionDaoImpl implements MovieSessionDao {
+public class MovieSessionDaoImpl
+        extends EntityManagerImpl<MovieSession> implements MovieSessionDao {
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -37,7 +38,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession add(MovieSession movieSession) {
-        return new EntityManagerImpl<MovieSession>(sessionFactory).add(movieSession);
+    public MovieSession getById(Long movieSessionId) {
+        return getById(MovieSession.class, movieSessionId);
     }
 }

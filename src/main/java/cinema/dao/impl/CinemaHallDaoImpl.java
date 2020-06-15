@@ -11,14 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CinemaHallDaoImpl implements CinemaHallDao {
+public class CinemaHallDaoImpl extends EntityManagerImpl<CinemaHall> implements CinemaHallDao {
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Override
-    public CinemaHall add(CinemaHall cinemaHall) {
-        return new EntityManagerImpl<CinemaHall>(sessionFactory).add(cinemaHall);
-    }
 
     @Override
     public List<CinemaHall> getAll() {
@@ -30,5 +25,10 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all cinema halls. ", e);
         }
+    }
+
+    @Override
+    public CinemaHall getById(Long cinemaHallId) {
+        return getById(CinemaHall.class, cinemaHallId);
     }
 }

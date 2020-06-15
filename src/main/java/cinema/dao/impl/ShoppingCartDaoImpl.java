@@ -15,14 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ShoppingCartDaoImpl implements ShoppingCartDao {
+public class ShoppingCartDaoImpl
+        extends EntityManagerImpl<ShoppingCart> implements ShoppingCartDao {
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Override
-    public ShoppingCart add(ShoppingCart shoppingCart) {
-        return new EntityManagerImpl<ShoppingCart>(sessionFactory).add(shoppingCart);
-    }
 
     @Override
     public ShoppingCart getByUser(User user) {

@@ -11,14 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MovieDaoImpl implements MovieDao {
+public class MovieDaoImpl extends EntityManagerImpl<Movie> implements MovieDao {
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Override
-    public Movie add(Movie movie) {
-        return new EntityManagerImpl<Movie>(sessionFactory).add(movie);
-    }
 
     @Override
     public List<Movie> getAll() {
@@ -30,5 +25,10 @@ public class MovieDaoImpl implements MovieDao {
         } catch (Exception e) {
             throw new DataProcessingException("Error retrieving all movies. ", e);
         }
+    }
+
+    @Override
+    public Movie getById(Long movieId) {
+        return getById(Movie.class, movieId);
     }
 }
