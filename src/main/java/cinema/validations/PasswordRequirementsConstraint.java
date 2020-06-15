@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordRequirementsConstraint {
-    String message() default "Password not meet the requirements";
+    String message() default "Password does not meet the requirements";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

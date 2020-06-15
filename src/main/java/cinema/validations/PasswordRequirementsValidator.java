@@ -13,10 +13,6 @@ public class PasswordRequirementsValidator
         implements ConstraintValidator<PasswordRequirementsConstraint, String> {
 
     @Override
-    public void initialize(PasswordRequirementsConstraint constraint) {
-    }
-
-    @Override
     public boolean isValid(String password, ConstraintValidatorContext cxt) {
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
                 new LengthRule(8, 16),
