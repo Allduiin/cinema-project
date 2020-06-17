@@ -53,8 +53,8 @@ public class Main {
         movieSessionService.add(movieSession1);
 
         AuthenticationService authenticationService = context.getBean(AuthenticationService.class);
-        authenticationService.register("alisa@gmail.com", "1");
-        authenticationService.register("bob@gmail.com", "2");
+        authenticationService.registerUser("alisa@gmail.com", "1");
+        authenticationService.registerUser("bob@gmail.com", "2");
 
         UserService userService = context.getBean(UserService.class);
         User user1 = userService.findByEmail("alisa@gmail.com");
