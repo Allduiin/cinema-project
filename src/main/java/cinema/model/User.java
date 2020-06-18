@@ -22,7 +22,7 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @Override

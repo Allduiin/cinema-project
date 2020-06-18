@@ -73,13 +73,13 @@ public class InjectDataController {
         movieSessionService.add(movieSession1);
 
         authenticationService.registerAdmin("Admin", "1");
-        User user1 = authenticationService.registerUser("bob@gmail.com", "1");
+        User user = authenticationService.registerUser("bob@gmail.com", "1");
 
-        shoppingCartService.addSession(movieSession, user1);
-        shoppingCartService.addSession(movieSession, user1);
-        shoppingCartService.addSession(movieSession1, user1);
+        shoppingCartService.addSession(movieSession, user);
+        shoppingCartService.addSession(movieSession, user);
+        shoppingCartService.addSession(movieSession1, user);
 
-        orderService.completeOrder(shoppingCartService.getByUser(user1).getTickets(), user1);
+        orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
         return "Your data was added to db";
     }
 }
