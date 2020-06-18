@@ -17,8 +17,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
         "cinema.service.impl",
         "cinema.dao.impl",
         "cinema.security",
-        "cinema.mappers",
-        "cinema.security"
+        "cinema.mappers"
 })
 public class AppConfig {
     @Autowired
