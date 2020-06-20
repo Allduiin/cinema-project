@@ -26,22 +26,19 @@ public class TestDataController {
     private final AuthenticationService authenticationService;
     private final ShoppingCartService shoppingCartService;
     private final OrderService orderService;
-    private final RoleService roleService;
 
     public TestDataController(MovieService movieService,
                               CinemaHallService cinemaHallService,
                               MovieSessionService movieSessionService,
                               AuthenticationService authenticationService,
                               ShoppingCartService shoppingCartService,
-                              OrderService orderService,
-                              RoleService roleService) {
+                              OrderService orderService) {
         this.movieService = movieService;
         this.cinemaHallService = cinemaHallService;
         this.movieSessionService = movieSessionService;
         this.authenticationService = authenticationService;
         this.shoppingCartService = shoppingCartService;
         this.orderService = orderService;
-        this.roleService = roleService;
     }
 
     @GetMapping("/inject-test-data")
