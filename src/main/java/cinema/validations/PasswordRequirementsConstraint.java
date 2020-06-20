@@ -14,6 +14,8 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordRequirementsConstraint {
     String message() default "Password does not meet the requirements";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

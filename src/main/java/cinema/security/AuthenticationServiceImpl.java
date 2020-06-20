@@ -7,20 +7,24 @@ import cinema.service.RoleService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ShoppingCartService shoppingCartService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleService roleService;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
+
+    public AuthenticationServiceImpl(UserService userService,
+                                     ShoppingCartService shoppingCartService,
+                                     PasswordEncoder passwordEncoder, RoleService roleService) {
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
+    }
 
     @Override
     public User registerUser(String email, String password) throws AuthenticationException {

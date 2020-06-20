@@ -5,13 +5,15 @@ import cinema.exceptions.DataProcessingException;
 import cinema.model.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class RoleDaoImpl extends EntityManagerImpl<Role> implements RoleDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public RoleDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Role getByRoleName(Role.RoleName roleName) {
