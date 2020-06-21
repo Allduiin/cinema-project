@@ -10,7 +10,6 @@ import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
 import cinema.service.OrderService;
-import cinema.service.RoleService;
 import cinema.service.ShoppingCartService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
