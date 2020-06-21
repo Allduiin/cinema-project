@@ -71,10 +71,11 @@ public class TestDataController {
         User user = authenticationService.registerUser("bob@gmail.com", "1");
 
         shoppingCartService.addSession(movieSession, user);
-        shoppingCartService.addSession(movieSession, user);
         shoppingCartService.addSession(movieSession1, user);
 
         orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
+
+        shoppingCartService.addSession(movieSession, user);
         return "Your data was added to db";
     }
 }

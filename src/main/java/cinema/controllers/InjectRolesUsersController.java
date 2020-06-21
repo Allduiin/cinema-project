@@ -8,12 +8,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class InjectDataController {
+public class InjectRolesUsersController {
     private final AuthenticationService authenticationService;
     private final RoleService roleService;
 
-    public InjectDataController(AuthenticationService authenticationService,
-                                RoleService roleService) {
+    public InjectRolesUsersController(AuthenticationService authenticationService,
+                                      RoleService roleService) {
         this.authenticationService = authenticationService;
         this.roleService = roleService;
     }
