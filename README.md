@@ -1,7 +1,7 @@
 # Cinema shop
 # Project Description 
 This project represents small online cinema shop which has functions like: 
-Registration, Login, Add MovieSession To Cart, Complete Order, etc. 
+Authentication and Authorization (basic auth is supported), select a movie, buy a ticket, etc. 
 
 
 # Target of project

@@ -22,7 +22,7 @@ public class InjectRolesUsersController {
     public void inject() throws AuthenticationException {
         roleService.add(new Role(Role.RoleName.ADMIN));
         roleService.add(new Role(Role.RoleName.USER));
-        authenticationService.registerAdmin("Admin", "1");
-        authenticationService.registerUser("user@gmail.com", "1");
+        authenticationService.registerWithRole("Admin", "1", Role.RoleName.ADMIN);
+        authenticationService.register("user@gmail.com", "1");
     }
 }

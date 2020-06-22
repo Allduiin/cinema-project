@@ -18,6 +18,6 @@ public class UserController {
 
     @GetMapping("/by-email")
     public User getByEmail(@RequestParam String email) {
-        return userService.findByEmail(email);
+        return userService.getByEmail(email);
     }
 }

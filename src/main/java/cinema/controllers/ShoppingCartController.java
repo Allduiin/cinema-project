@@ -42,6 +42,6 @@ public class ShoppingCartController {
             Authentication authentication) {
         String email = ((UserDetails) authentication.getPrincipal()).getUsername();
         return shoppingCartMapper.getShoppingCartResponseDtoFrom(
-                shoppingCartService.getByUser(userService.findByEmail(email)));
+                shoppingCartService.getByUser(userService.getByEmail(email)));
     }
 }

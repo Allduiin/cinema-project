@@ -17,7 +17,7 @@ public class UserDaoImpl extends EntityManagerImpl<User> implements UserDao {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<User> getByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM users where email =: email")
                     .setParameter("email", email)

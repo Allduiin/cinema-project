@@ -67,7 +67,7 @@ public class TestDataController {
         movieSession1.setShowTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(12, 20)));
         movieSessionService.add(movieSession1);
 
-        User user = authenticationService.registerUser("bob@gmail.com", "1");
+        User user = authenticationService.register("bob@gmail.com", "1");
 
         shoppingCartService.addSession(movieSession, user);
         shoppingCartService.addSession(movieSession1, user);

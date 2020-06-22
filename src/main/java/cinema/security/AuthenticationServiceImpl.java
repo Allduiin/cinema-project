@@ -27,18 +27,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public User registerUser(String email, String password) throws AuthenticationException {
-        return register(email, password, Role.RoleName.USER);
+    public User register(String email, String password) throws AuthenticationException {
+        return registerWithRole(email, password, Role.RoleName.USER);
     }
 
     @Override
-    public User registerAdmin(String email, String password) throws AuthenticationException {
-        return register(email, password, Role.RoleName.ADMIN);
-    }
-
-    private User register(String email, String password, Role.RoleName roleName)
+    public User registerWithRole(String email, String password, Role.RoleName roleName)
             throws AuthenticationException {
-        if (userService.findByEmail(email) != null) {
+        if (userService.getByEmail(email) != null) {
             throw new AuthenticationException("This email has already exists");
         }
         User user = new User();
@@ -46,9 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(Set.of(roleService.getByRoleName(roleName)));
         user = userService.add(user);
-        if (roleName != Role.RoleName.ADMIN) {
-            shoppingCartService.registerNewShoppingCart(user);
-        }
+        shoppingCartService.registerNewShoppingCart(user);
         return user;
     }
 }
