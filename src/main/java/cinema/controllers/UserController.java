@@ -2,6 +2,7 @@ package cinema.controllers;
 
 import cinema.model.User;
 import cinema.service.UserService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ public class UserController {
 
     @GetMapping("/by-email")
     public User getByEmail(@RequestParam String email) {
-        return userService.getByEmail(email);
+        return userService.getByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
     }
 }

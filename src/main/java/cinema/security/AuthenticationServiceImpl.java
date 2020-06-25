@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User registerWithRole(String email, String password, Role.RoleName roleName)
             throws AuthenticationException {
-        if (userService.getByEmail(email) != null) {
+        if (userService.getByEmail(email).isPresent()) {
             throw new AuthenticationException("This email has already exists");
         }
         User user = new User();

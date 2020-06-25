@@ -3,6 +3,7 @@ package cinema.service.impl;
 import cinema.dao.UserDao;
 import cinema.model.User;
 import cinema.service.UserService;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,8 +20,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByEmail(String email) {
-        return userDao.getByEmail(email).orElse(null);
+    public Optional<User> getByEmail(String email) {
+        return userDao.getByEmail(email);
     }
 
     @Override

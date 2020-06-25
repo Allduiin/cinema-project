@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,7 +45,8 @@ public class OrderController {
     @GetMapping("/by-user")
     public List<OrderResponseDto> getOrderById(Authentication authentication) {
         String email = ((UserDetails) authentication.getPrincipal()).getUsername();
-        return orderService.getOrderHistory(userService.getByEmail(email))
+        return orderService.getOrderHistory(userService.getByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found.")))
                 .stream()
                 .map(orderMapper::getOrderResponseDtoFromOrder)
                 .collect(Collectors.toList());
