@@ -4,14 +4,12 @@ import cinema.exceptions.AuthenticationException;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
-import cinema.model.Role;
 import cinema.model.User;
 import cinema.security.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
 import cinema.service.OrderService;
-import cinema.service.RoleService;
 import cinema.service.ShoppingCartService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,33 +18,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class InjectDataController {
+public class TestDataController {
     private final MovieService movieService;
     private final CinemaHallService cinemaHallService;
     private final MovieSessionService movieSessionService;
     private final AuthenticationService authenticationService;
     private final ShoppingCartService shoppingCartService;
     private final OrderService orderService;
-    private final RoleService roleService;
 
-    public InjectDataController(MovieService movieService, CinemaHallService cinemaHallService,
-                                MovieSessionService movieSessionService,
-                                AuthenticationService authenticationService,
-                                ShoppingCartService shoppingCartService,
-                                OrderService orderService, RoleService roleService) {
+    public TestDataController(MovieService movieService,
+                              CinemaHallService cinemaHallService,
+                              MovieSessionService movieSessionService,
+                              AuthenticationService authenticationService,
+                              ShoppingCartService shoppingCartService,
+                              OrderService orderService) {
         this.movieService = movieService;
         this.cinemaHallService = cinemaHallService;
         this.movieSessionService = movieSessionService;
         this.authenticationService = authenticationService;
         this.shoppingCartService = shoppingCartService;
         this.orderService = orderService;
-        this.roleService = roleService;
     }
 
-    @GetMapping("/inject-data")
-    public String inject() throws AuthenticationException {
-        roleService.add(new Role(Role.RoleName.ADMIN));
-        roleService.add(new Role(Role.RoleName.USER));
+    @GetMapping("/inject-test-data")
+    public String injectTestData() throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious 5");
         movieService.add(movie);
@@ -72,14 +67,14 @@ public class InjectDataController {
         movieSession1.setShowTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(12, 20)));
         movieSessionService.add(movieSession1);
 
-        authenticationService.registerAdmin("Admin", "1");
-        User user = authenticationService.registerUser("bob@gmail.com", "1");
+        User user = authenticationService.register("bob@gmail.com", "1");
 
-        shoppingCartService.addSession(movieSession, user);
         shoppingCartService.addSession(movieSession, user);
         shoppingCartService.addSession(movieSession1, user);
 
         orderService.completeOrder(shoppingCartService.getByUser(user).getTickets(), user);
+
+        shoppingCartService.addSession(movieSession, user);
         return "Your data was added to db";
     }
 }

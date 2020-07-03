@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class EntityManagerImpl<T> {
-    @Autowired
     private SessionFactory sessionFactory;
 
     public T add(T t) {
@@ -38,5 +37,10 @@ public class EntityManagerImpl<T> {
         } catch (Exception e) {
             throw new DataProcessingException("Can't find entity by id", e);
         }
+    }
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 }

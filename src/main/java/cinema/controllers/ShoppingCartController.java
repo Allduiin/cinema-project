@@ -7,6 +7,7 @@ import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,7 @@ public class ShoppingCartController {
             Authentication authentication) {
         String email = ((UserDetails) authentication.getPrincipal()).getUsername();
         return shoppingCartMapper.getShoppingCartResponseDtoFrom(
-                shoppingCartService.getByUser(userService.findByEmail(email)));
+                shoppingCartService.getByUser(userService.getByEmail(email)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found."))));
     }
 }

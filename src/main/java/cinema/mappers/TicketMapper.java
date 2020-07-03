@@ -9,8 +9,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class TicketMapper {
     public List<TicketDto> getDtoTicketsFromTickets(List<Ticket> tickets) {
-        return tickets.stream().map(ticket -> new TicketDto(ticket.getId(),
-                ticket.getMovieSession().getId(), ticket.getUser().getId()))
+        return tickets
+                .stream()
+                .map(ticket -> {
+                    TicketDto ticketDto = new TicketDto();
+                    ticketDto.setId(ticket.getId());
+                    ticketDto.setMovieSessionId(ticket.getMovieSession().getId());
+                    ticketDto.setUserId(ticket.getUser().getId());
+                    return ticketDto;
+                })
                 .collect(Collectors.toList());
     }
 }

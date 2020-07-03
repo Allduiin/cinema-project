@@ -7,7 +7,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity(name = "roles")
 public class Role {
     @Id
@@ -18,7 +22,6 @@ public class Role {
     private RoleName roleName;
 
     public Role() {
-
     }
 
     public Role(RoleName roleName) {
@@ -27,22 +30,6 @@ public class Role {
 
     public static Role of(String roleName) {
         return new Role(RoleName.valueOf(roleName));
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public RoleName getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(RoleName roleName) {
-        this.roleName = roleName;
     }
 
     @Override

@@ -2,13 +2,15 @@ package cinema.mappers;
 
 import cinema.model.Order;
 import cinema.model.dto.OrderResponseDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMapper {
-    @Autowired
-    TicketMapper ticketMapper;
+    private final TicketMapper ticketMapper;
+
+    public OrderMapper(TicketMapper ticketMapper) {
+        this.ticketMapper = ticketMapper;
+    }
 
     public OrderResponseDto getOrderResponseDtoFromOrder(Order order) {
         OrderResponseDto orderResponseDto = new OrderResponseDto();

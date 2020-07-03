@@ -10,9 +10,9 @@ import cinema.service.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,14 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
-    @Autowired
-    private ShoppingCartService shoppingCartService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private OrderMapper orderMapper;
+    private final OrderService orderService;
+    private final ShoppingCartService shoppingCartService;
+    private final UserService userService;
+    private final OrderMapper orderMapper;
+
+    public OrderController(OrderService orderService, ShoppingCartService shoppingCartService,
+                           UserService userService, OrderMapper orderMapper) {
+        this.orderService = orderService;
+        this.shoppingCartService = shoppingCartService;
+        this.userService = userService;
+        this.orderMapper = orderMapper;
+    }
 
     @PostMapping("/complete")
     public void completeOrder(@RequestBody @Valid OrderRequestDto orderDto) {
@@ -41,9 +45,10 @@ public class OrderController {
     @GetMapping("/by-user")
     public List<OrderResponseDto> getOrderById(Authentication authentication) {
         String email = ((UserDetails) authentication.getPrincipal()).getUsername();
-        return orderService.getOrderHistory(userService.findByEmail(email))
+        return orderService.getOrderHistory(userService.getByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found.")))
                 .stream()
-                .map(order -> orderMapper.getOrderResponseDtoFromOrder(order))
+                .map(orderMapper::getOrderResponseDtoFromOrder)
                 .collect(Collectors.toList());
     }
 }

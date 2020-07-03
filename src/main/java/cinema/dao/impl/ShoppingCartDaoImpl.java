@@ -11,19 +11,20 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ShoppingCartDaoImpl
         extends EntityManagerImpl<ShoppingCart> implements ShoppingCartDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public ShoppingCartDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public ShoppingCart getByUser(User user) {
-        Session session = sessionFactory.openSession();
-        try {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<ShoppingCart> query
                     = criteriaBuilder.createQuery(ShoppingCart.class);
@@ -34,10 +35,6 @@ public class ShoppingCartDaoImpl
                     .uniqueResult();
         } catch (Exception e) {
             throw new DataProcessingException("Error adding user", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 

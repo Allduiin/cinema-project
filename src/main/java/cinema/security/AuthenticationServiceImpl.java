@@ -7,34 +7,34 @@ import cinema.service.RoleService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ShoppingCartService shoppingCartService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleService roleService;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
-    @Override
-    public User registerUser(String email, String password) throws AuthenticationException {
-        return register(email, password, Role.RoleName.USER);
+    public AuthenticationServiceImpl(UserService userService,
+                                     ShoppingCartService shoppingCartService,
+                                     PasswordEncoder passwordEncoder, RoleService roleService) {
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
     @Override
-    public User registerAdmin(String email, String password) throws AuthenticationException {
-        return register(email, password, Role.RoleName.ADMIN);
+    public User register(String email, String password) throws AuthenticationException {
+        return registerWithRole(email, password, Role.RoleName.USER);
     }
 
-    private User register(String email, String password, Role.RoleName roleName)
+    @Override
+    public User registerWithRole(String email, String password, Role.RoleName roleName)
             throws AuthenticationException {
-        if (userService.findByEmail(email) != null) {
+        if (userService.getByEmail(email).isPresent()) {
             throw new AuthenticationException("This email has already exists");
         }
         User user = new User();
@@ -42,9 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(Set.of(roleService.getByRoleName(roleName)));
         user = userService.add(user);
-        if (roleName != Role.RoleName.ADMIN) {
-            shoppingCartService.registerNewShoppingCart(user);
-        }
+        shoppingCartService.registerNewShoppingCart(user);
         return user;
     }
 }

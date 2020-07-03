@@ -6,27 +6,24 @@ import cinema.model.User;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoImpl extends EntityManagerImpl<User> implements UserDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        Session session = sessionFactory.openSession();
-        try {
+    public Optional<User> getByEmail(String email) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM users where email =: email")
                     .setParameter("email", email)
                     .uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Error getting Book by title", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 

@@ -14,6 +14,8 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordsEqualsConstraint {
     String message() default "Not equal passwords";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
